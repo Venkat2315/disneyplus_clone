@@ -11,28 +11,27 @@ function Header() {
                 <span>Home</span>
             </a>
             <a>
-                <img src='./images/search-icon.svg' alt='Home Tab'/>
+                <img src='./images/search-icon.svg' alt='Search Tab'/>
                 <span>Search</span>
             </a>
             <a>
-                <img src='./images/watchlist-icon.svg' alt='Home Tab'/>
+                <img src='./images/watchlist-icon.svg' alt='Watchlist Tab'/>
                 <span>WatchList</span>
             </a>
             <a>
-                <img src='./images/original-icon.svg' alt='Home Tab'/>
+                <img src='./images/original-icon.svg' alt='Original Tab'/>
                 <span>Originals</span>
             </a>
             <a>
-                <img src='./images/movie-icon.svg' alt='Home Tab'/>
+                <img src='./images/movie-icon.svg' alt='Movies Tab'/>
                 <span>Movies</span>
             </a>
             <a>
-                <img src='./images/series-icon.svg' alt='Home Tab'/>
+                <img src='./images/series-icon.svg' alt='Series Tab'/>
                 <span>Series</span>
             </a>
         </NavMenu>
-        <UserImg src="https://www.google.com/imgres?q=fuck%20off&imgurl=https%3A%2F%2Fstatic7.depositphotos.com%2F1038411%2F676%2Fv%2F450%2Fdepositphotos_6767385-stock-illustration-hand-show-fuck.jpg&imgrefurl=https%3A%2F%2Fdepositphotos.com%2Fillustrations%2Ffuck-off.html&docid=e6ITvfX4xchZLM&tbnid=aSXm2RM8LOWxJM&vet=12ahUKEwji0NH2gpiGAxVhslYBHZcJBXsQM3oECEUQAA..i&w=462&h=600&hcb=2&ved=2ahUKEwji0NH2gpiGAxVhslYBHZcJBXsQM3oECEUQAA"
-        alt='Fuck off'/>
+        <UserImg src='./images/IMG_3167.JPG' alt='Fuck off'/>
     </Nav>
   )
 }
@@ -55,6 +54,8 @@ const NavMenu=styled.div`
     flex: 1;
     margin-left: 25px;
     align-items: center;
+    padding: 0 36px;
+    overflow: hidden;
     a{
         display: flex;
         align-items: center;
