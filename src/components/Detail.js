@@ -60,6 +60,7 @@ const Backgroud= styled.div`
 `
 
 const ImageTitle=styled.div`
+    margin-top: 30px;
     min-height: 370px;
     min-width: 270px;
     height: 10vh;
@@ -144,4 +145,5 @@ const Description=styled.div`
     font-size: 20px;
     margin-top: 16px;
     color: rgb(249, 249, 249);
+    max-width: 750px;
 `
