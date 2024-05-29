@@ -1,36 +1,67 @@
-import React from 'react'
+import React,{useEffect, useState} from 'react'
 import styled from 'styled-components'
+import { Link, useParams } from 'react-router-dom'
+import db from "../Firebase";
+import { collection, doc, getDoc } from 'firebase/firestore';
 
 function Detail() {
+  
+    const {id} = useParams();
+    const [movie, setMovie] =useState(null);
+
+    useEffect(()=>{
+        fetchDocumentsById(id);
+    },[id])
+
+    const fetchDocumentsById =async (id)=>{
+        try{
+            const docRef=doc(collection(db,'movies'), id);
+            const docSnapShot= await getDoc(docRef);
+            if(docSnapShot.exists()){
+                setMovie(docSnapShot.data());
+            }
+            else{
+                <Link to={`/`}/> 
+            }
+        }catch (error){
+            console.log('Error occuered in Detail.js', error);
+        }
+        
+    }
+
+    if (!movie) {
+        return <div>Loading...</div>;
+    }
+
   return (
     <Container>
         <Backgroud>
-            <img src='./images/oppenheimer_wallpaper.jpg' alt='oppenheimer'/>
+            <img src={movie.backgroundImg} alt={movie.title}/>
         </Backgroud>
         <ImageTitle>
-            <img src='./images/download.png' alt='oppenheimer Title'/>
+            <img src={movie.titleImg} alt={movie.title}/>
         </ImageTitle>
         <Controls>
             <PlayButton>
-                <img src='./images/play-icon-black.png' alt='Play'/>
+                <img src='/images/play-icon-black.png' alt='Play'/>
                 <span>PLAY</span>
             </PlayButton>
             <TrailerButton>
-                <img src='./images/play-icon-white.png' alt='Trailer'/>
+                <img src='/images/play-icon-white.png' alt='Trailer'/>
                 <span>Trailer</span>
             </TrailerButton>
             <AddButton>
                 <span>+</span>
             </AddButton>
             <GroupWatchButton>
-                <img src='./images/group-icon.png' alt='Groupwatch'/>
+                <img src='/images/group-icon.png' alt='Groupwatch'/>
             </GroupWatchButton>
         </Controls>
         <SubTitle>
-            temp Subtitle
+            {movie.subTitle}
         </SubTitle>
         <Description>
-            temp description
+            {movie.description}
         </Description>
     </Container>
   )

@@ -5,13 +5,13 @@ function Login() {
   return (
     <Container>
         <Backgroud>
-            <img src='./images/login-background.jpg' alt='login-backgrouund'/>
+            <img src='/images/login-background.jpg' alt='login-backgrouund'/>
         </Backgroud>
         <ContentBox>
-            <ContentLogo1 src='./images/cta-logo-one.svg' alt='ContentLogo1'/>
+            <ContentLogo1 src='/images/cta-logo-one.svg' alt='ContentLogo1'/>
             <SignUp>SIGN UP ASSHOLE</SignUp>
             <Description> TEMP Description</Description>
-            <ContentLogo2 src='./images/cta-logo-two.png' alt='ContentLogo2'/>
+            <ContentLogo2 src='/images/cta-logo-two.png' alt='ContentLogo2'/>
         </ContentBox>
     </Container>
   )

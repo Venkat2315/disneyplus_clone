@@ -1,37 +1,103 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import { auth, provider } from '../Firebase';
+import { signInWithPopup, signOut} from "firebase/auth";
+import { useSelector, useDispatch } from 'react-redux';
+
+import {
+    selectUserName,
+    selectUserPhoto,
+    setSignOut,
+    setUserLogin
+} from "../features/user/userSlice";
+
+
 
 function Header() {
+
+    const dispatch=useDispatch();
+    const navigate=useNavigate();
+    const userName=useSelector(selectUserName);
+    const userPhoto=useSelector(selectUserPhoto);
+
+    useEffect(()=>{
+        auth.onAuthStateChanged(async (user)=>{
+            if(user){
+                dispatch(setUserLogin({
+                    name:user.displayName,
+                    email:user.email,
+                    photo:user.photoURL
+                  }))
+                navigate("/");
+            }
+        })
+    },[])
+
+    const logIn = () => {
+      signInWithPopup(auth, provider)
+        .then((result) => {
+          let user=result.user
+          dispatch(setUserLogin({
+            name:user.displayName,
+            email:user.email,
+            photo:user.photoURL
+          }))
+          navigate("/");
+        })
+        .catch((error) => {
+            console.error("Unsuccesful Login!! Try Again. Error:",error);
+        });
+    };
+
+    const logOut = async () => {
+        try {
+            await signOut(auth);
+            dispatch(setSignOut());
+            navigate("/login"); 
+          } catch (error) {
+            console.error("Unsuccesful LogOut!! Try Again. Error:",error);
+          }
+      };
+
   return (
     <Nav>
-        <Logo src="./images/logo.svg"/>
-        <NavMenu>
-            <a>
-                <img src='./images/home-icon.svg' alt='Home Tab'/>
-                <span>Home</span>
-            </a>
-            <a>
-                <img src='./images/search-icon.svg' alt='Search Tab'/>
-                <span>Search</span>
-            </a>
-            <a>
-                <img src='./images/watchlist-icon.svg' alt='Watchlist Tab'/>
-                <span>WatchList</span>
-            </a>
-            <a>
-                <img src='./images/original-icon.svg' alt='Original Tab'/>
-                <span>Originals</span>
-            </a>
-            <a>
-                <img src='./images/movie-icon.svg' alt='Movies Tab'/>
-                <span>Movies</span>
-            </a>
-            <a>
-                <img src='./images/series-icon.svg' alt='Series Tab'/>
-                <span>Series</span>
-            </a>
-        </NavMenu>
-        <UserImg src='./images/IMG_3167.JPG' alt='Fuck off'/>
+        <Logo src="/images/logo.svg"/>
+        { !userName ?
+            <LoginContainer>
+                <Login onClick={logIn}>Login</Login>
+            </LoginContainer> :
+            <>
+                <NavMenu>
+                    <a>
+                        <img src='/images/home-icon.svg' alt='Home Tab'/>
+                        <span>Home</span>
+                    </a>
+                    <a>
+                        <img src='/images/search-icon.svg' alt='Search Tab'/>
+                        <span>Search</span>
+                    </a>
+                    <a>
+                        <img src='/images/watchlist-icon.svg' alt='Watchlist Tab'/>
+                        <span>WatchList</span>
+                    </a>
+                    <a>
+                        <img src='/images/original-icon.svg' alt='Original Tab'/>
+                        <span>Originals</span>
+                    </a>
+                    <a>
+                        <img src='/images/movie-icon.svg' alt='Movies Tab'/>
+                        <span>Movies</span>
+                    </a>
+                    <a>
+                        <img src='/images/series-icon.svg' alt='Series Tab'/>
+                        <span>Series</span>
+                    </a>
+                </NavMenu>
+                <UserImg onClick={logOut} src='/images/IMG_3167.JPG' alt='Fuck off'/>
+            </>
+        }
+        
     </Nav>
   )
 }
@@ -95,4 +161,29 @@ const UserImg=styled.img`
     height: 48px;
     border-radius: 50%;
     cursor: pointer;
+`
+
+const LoginContainer=styled.div`
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+
+`
+
+const Login=styled.div`
+    border: 1px solid;
+    border-radius: 4px;
+    letter-spacing: 1.5px;
+    padding: 8px 16px;
+    text-transform: uppercase;
+    background-color: rgba(0, 0, 0, 0.6);
+    transition: all 0.5s ease 0s;
+    cursor: pointer;
+
+    &:hover{
+        background-color: #f9f9f9;
+        color: #000;
+        border-color: transparent;
+    }
+
 `
